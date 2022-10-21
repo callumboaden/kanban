@@ -4,11 +4,32 @@ import { Draggable } from "react-beautiful-dnd";
 
 const Container = styled.div`
   margin-bottom: 1rem;
-  border: 1px solid #000;
   padding: 1rem;
+  border-radius: 6px;
+  background-color: rgb(${({ theme }) => theme.colors.bg.primary});
+  box-shadow: 0 3px 0px rgba(${({ theme }) => theme.colors.border.primary} / 1);
+
+  div {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: rgb(${({ theme }) => theme.colors.text.secondary});
+  }
 `;
 
-function Task({ title, id, index }) {
+function Task({
+  title,
+  id,
+  index,
+  subtasks,
+  handleEditTask,
+  columnId,
+  subtaskOrder,
+}) {
+  const subtaskArr = Object.values(subtasks);
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -16,8 +37,12 @@ function Task({ title, id, index }) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          onClick={() => handleEditTask(id, columnId)}
         >
-          {title}
+          <div>{title}</div>
+          <p>{`${
+            subtaskArr.filter((subtask) => subtask.isComplete).length
+          } of ${subtaskArr.length} subtasks`}</p>
         </Container>
       )}
     </Draggable>

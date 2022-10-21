@@ -24,7 +24,7 @@ const initialData = {
           subtasks: {
             "subtask-1": {
               id: "subtask-1",
-              isComplete: false,
+              isComplete: true,
               title: "Subtask 1",
             },
             "subtask-2": {
